@@ -12,41 +12,40 @@ describe('GitUserSearchController', function() {
     expect(ctrl.searchTerm).toBeUndefined();
   });
 
-  describe('when searching for a user', function() {
-
+	describe('when searching for a user', function() {
     afterEach(function() {
       httpBackend.verifyNoOutstandingExpectation();
       httpBackend.verifyNoOutstandingRequest();
-	});
+    });
 
     var httpBackend;
     beforeEach(inject(function($httpBackend) {
       httpBackend = $httpBackend;
       httpBackend
-        .expectGET("https://api.github.com/search/users?q=natstar")
+        .expectGET("https://api.github.com/search/users?access_token=" + token + "&q=helo")
         .respond(
-        { items: items }
-      );
+          { items: items }
+        );
     }));
 
-    var items = [
-      {
-        "login": "tansaku",
-        "avatar_url": "https://avatars.githubusercontent.com/u/30216?v=3",
-        "html_url": "https://github.com/tansaku"
-      },
-      {
-        "login": "stephenlloyd",
-        "avatar_url": "https://avatars.githubusercontent.com/u/196474?v=3",
-        "html_url": "https://github.com/stephenlloyd"
-      }
-    ];
+	  var items = [
+	    {
+	      "login": "tansaku",
+	      "avatar_url": "https://avatars.githubusercontent.com/u/30216?v=3",
+	      "html_url": "https://github.com/tansaku"
+	    }, 
+	    {
+	      "login": "stephenlloyd",
+	      "avatar_url": "https://avatars.githubusercontent.com/u/196474?v=3",
+	      "html_url": "https://github.com/stephenlloyd"
+	    }
+	  ];
 
-    it('displays search results', function() {
-      ctrl.searchTerm = 'natstar';
+	  it('displays search results', function() {
+	  	ctrl.searchTerm = 'helo';
       ctrl.doSearch();
       httpBackend.flush();
-      expect(ctrl.searchResult.items).toEqual(items);
-    });
-  });
+	    expect(ctrl.searchResult.items).toEqual(items);
+	  });
+	});
 });
