@@ -11,7 +11,20 @@ describe('Github Profile finder', function() {
   });
 
   it('finds profiles', function() {
-    searchBox.sendKeys('spike01');
-    expect(element(by.binding('user.login')).getText()).toEqual('spike01');
+    searchBox.sendKeys('spike');
+    var profiles = element.all(by.repeater('user in searchCtrl.searchResult.items'));
+    expect(profiles.last().getText()).toEqual('spikesagal');
+  });
+
+  it('counts profiles', function() {
+    searchBox.sendKeys('natstar93');
+    var profiles = element.all(by.repeater('user in searchCtrl.searchResult.items'));
+    expect(profiles.count()).toEqual(1);
+  });
+
+  it('contains profile links', function() {
+    searchBox.sendKeys('natstar93');
+    var profiles = element.all(by.repeater('user in searchCtrl.searchResult.items'));
+    expect(profiles.count()).toEqual(1);
   });
 });
